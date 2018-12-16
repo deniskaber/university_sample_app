@@ -1,4 +1,6 @@
 
+export const BASE_URL = 'http://localhost:3001/api';
+
 class ApiService {
     get(url, parameters) {
         return fetch(url, {
