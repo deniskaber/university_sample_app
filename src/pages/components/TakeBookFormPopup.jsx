@@ -1,20 +1,14 @@
 import React from 'react';
 import {Alert, FormGroup, ControlLabel, FormControl, Modal, Button} from 'react-bootstrap';
-import {cloneDeep} from 'lodash';
 import {renderSelectOptions} from "../../utils";
 
-export class BookDetailsPopup extends React.Component {
+export class TakeBookFormPopup extends React.Component {
     state = {
-        initialData: {},
         error: null,
-        data: {},
-    }
-
-    constructor(props) {
-        super(props);
-
-        this.state.initialData = cloneDeep(props.data);
-        this.state.data = props.data;
+        data: {
+            client_id: null,
+            book_id: null,
+        },
     }
 
     handleSubmit = (e) => {
@@ -39,64 +33,33 @@ export class BookDetailsPopup extends React.Component {
         }));
     }
 
-    renderModalTitle = (data) => {
-        if (!data.id) {
-            return 'Create new book';
-        }
-
-        return `Edit book ${data.name}`;
-    }
-
-    renderIdField = (data) => {
-        if (!data.id) {
-            return null;
-        }
-
-        return (
-            <FormGroup controlId="id">
-                <ControlLabel>Book ID</ControlLabel>
-                <FormControl.Static
-                    type="text"
-                    name="id"
-                >{data.id}</FormControl.Static>
-            </FormGroup>
-        );
-    }
-
-    renderDetailsForm = (data) => {
-        const {bookTypes} = this.props;
-
+    renderDetailsForm = (data, clients, books) => {
         return (
             <form onSubmit={this.handleSubmit}>
-                {this.renderIdField(data)}
-                <FormGroup controlId="name">
-                    <ControlLabel>Title</ControlLabel>
-                    <FormControl
-                        type="text"
-                        name="name"
-                        value={data.name || ''}
-                        onChange={this.handleFieldChange}
-                    />
-                </FormGroup>
-                <FormGroup controlId="count">
-                    <ControlLabel>Count</ControlLabel>
-                    <FormControl
-                        type="text"
-                        name="count"
-                        value={data.count || ''}
-                        onChange={this.handleFieldChange}
-                    />
-                </FormGroup>
-                <FormGroup controlId="type">
-                    <ControlLabel>Type</ControlLabel>
+                <FormGroup controlId="Client">
+                    <ControlLabel>Client</ControlLabel>
                     <FormControl
                         componentClass="select"
                         placeholder="select"
-                        name="type_id"
-                        value={data.type_id || ''}
+                        name="client_id"
+                        value={data.client_id || ''}
                         onChange={this.handleFieldChange}
                     >
-                        {renderSelectOptions(bookTypes)}
+                        <option key={0} value="" />
+                        {renderSelectOptions(clients)}
+                    </FormControl>
+                </FormGroup>
+                <FormGroup controlId="Book">
+                    <ControlLabel>Book</ControlLabel>
+                    <FormControl
+                        componentClass="select"
+                        placeholder="select"
+                        name="book_id"
+                        value={data.book_id || ''}
+                        onChange={this.handleFieldChange}
+                    >
+                        <option key={0} value="" />
+                        {renderSelectOptions(books)}
                     </FormControl>
                 </FormGroup>
             </form>
@@ -116,16 +79,16 @@ export class BookDetailsPopup extends React.Component {
     }
 
     render() {
-        const {show, onClose} = this.props;
+        const {show, onClose, clients, books} = this.props;
         const {data, error} = this.state;
 
         return (
             <Modal show={show} onHide={onClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.renderModalTitle(data)}</Modal.Title>
+                    <Modal.Title>Take a book</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {this.renderDetailsForm(data)}
+                    {this.renderDetailsForm(data, clients, books)}
                     {this.renderErrorMessage(error)}
                 </Modal.Body>
                 <Modal.Footer>

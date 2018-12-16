@@ -1,7 +1,9 @@
 import React from 'react';
 import {Button, ButtonToolbar, Panel, Table} from 'react-bootstrap';
-import {apiService} from "../api.service";
+import {apiService, BASE_URL} from "../services/api.service";
 import {ClientDetailsPopup} from "./components/ClientDetailsPopup";
+
+const CLIENTS_URL = `${BASE_URL}/clients`;
 
 export class ClientsPage extends React.Component {
     state = {
@@ -15,7 +17,7 @@ export class ClientsPage extends React.Component {
     }
 
     populateStateWithData = () => {
-        return apiService.get('http://localhost:3001/api/clients')
+        return apiService.get(CLIENTS_URL)
             .then(data => {
                 this.setState(data);
             });
@@ -39,7 +41,7 @@ export class ClientsPage extends React.Component {
 
     handleSubmitDetailsPopup = (data) => {
         if (this.state.selectedItemId) {
-            return apiService.post(`http://localhost:3001/api/clients/${this.state.selectedItemId}`, {
+            return apiService.post(`${CLIENTS_URL}/${this.state.selectedItemId}`, {
                 data,
             }).then(() => {
                 this.setViewListMode();
@@ -48,7 +50,7 @@ export class ClientsPage extends React.Component {
             });
         }
 
-        return apiService.put(`http://localhost:3001/api/clients`, {
+        return apiService.put(CLIENTS_URL, {
             data,
         }).then(() => {
             this.setViewListMode();
@@ -58,7 +60,7 @@ export class ClientsPage extends React.Component {
     }
 
     handleClickDeleteButton = (id) => {
-        return apiService.delete(`http://localhost:3001/api/clients/${id}`)
+        return apiService.delete(`${CLIENTS_URL}/${id}`)
             .then(() => this.populateStateWithData());
     }
 

@@ -8,6 +8,7 @@
     "express": "^4.16.4",
     "express-promise-router": "^3.0.3",
     "lodash": "^4.17.11",
+    "moment": "^2.23.0",
     "pg": "^7.7.1",
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",
@@ -20,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-server": "cd ./server && node server.js"
   },
   "eslintConfig": {
     "extends": "react-app"

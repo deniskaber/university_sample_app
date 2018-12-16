@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, ButtonToolbar, Panel, Table} from 'react-bootstrap';
 import {toast} from 'react-toastify';
-import {apiService, BASE_URL} from "../api.service";
+import {apiService, BASE_URL} from "../services/api.service";
 import {BookDetailsPopup} from "./components/BookDetailsPopup";
 
 const BOOKS_URL = `${BASE_URL}/books`;
