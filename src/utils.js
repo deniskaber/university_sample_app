@@ -8,11 +8,18 @@ export function convertCollectionToHash(array, hashKey, hashValue) {
     }, {});
 }
 
-export function formateDate(date) {
+export function formatDate(date) {
     if (!date) {
         return date;
     }
     return moment(date).format('YYYY-MM-DD');
+}
+
+export function formatMoney(amount) {
+    if (!amount) {
+        return amount;
+    }
+    return <span className="text-danger">${amount}</span>;
 }
 
 export function renderSelectOptions(entityMap = {}) {

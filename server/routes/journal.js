@@ -6,7 +6,7 @@ const router = new Router();
 
 const Controller = {
     getJournal: async (req, res) => {
-        const { rows } = await db.query('SELECT * FROM journal');
+        const { rows } = await db.query('SELECT * FROM jounal_view');
 
         res.json({data: rows});
     },

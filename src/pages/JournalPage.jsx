@@ -3,7 +3,7 @@ import {Button, ButtonToolbar, Panel, Table} from 'react-bootstrap';
 import {journalApiService} from "../services/journal.api.service";
 import {booksApiService} from "../services/books.api.service";
 import {clientsApiService} from "../services/clients.api.service";
-import {convertCollectionToHash, formateDate} from "../utils";
+import {convertCollectionToHash, formatDate, formatMoney} from "../utils";
 import {TakeBookFormPopup} from "./components/TakeBookFormPopup";
 import {toast} from "react-toastify";
 
@@ -111,11 +111,12 @@ export class JournalPage extends React.Component {
         return (
             <tr key={item.id}>
                 <td>{item.id}</td>
-                <td>{this.state.clients[item.client_id]}</td>
-                <td>{this.state.books[item.book_id]}</td>
-                <td>{formateDate(item.date_beg)}</td>
-                <td>{formateDate(item.date_end)}</td>
-                <td>{formateDate(item.date_ret)}</td>
+                <td>{item.client_name}</td>
+                <td>{item.book_name}</td>
+                <td>{formatDate(item.date_beg)}</td>
+                <td>{formatDate(item.date_end)}</td>
+                <td>{formatDate(item.date_ret)}</td>
+                <td>{formatMoney(item.fine)}</td>
                 {this.renderActionsCell(item)}
             </tr>
         )
@@ -140,6 +141,7 @@ export class JournalPage extends React.Component {
                             <th>Date Begin</th>
                             <th>Date End</th>
                             <th>Date Return</th>
+                            <th>Fine</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
